@@ -2,7 +2,7 @@ function [new_idx] = exclude(idx, N)
 % function help
 
 % ======================================================================
-% Copyright (c) 2012 David Weiss 2
+% Copyright (c) 2012 David Weiss
 % 
 % Permission is hereby granted, free of charge, to any person obtaining
 % a copy of this software and associated documentation files (the
@@ -23,6 +23,7 @@ function [new_idx] = exclude(idx, N)
 % OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 % WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 % ======================================================================
+
 
 
 
