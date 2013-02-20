@@ -4,35 +4,10 @@ classdef CFileFinder
       dir 
       onlydir
       root 
+      lookup      
    end
    
    methods (Hidden = true)
-       function names = get_names(f) 
-           files = dir(f.dir);
-           names = {};
-           for i = 1:numel(files)
-               if isempty(strfind(files(i).name, '.'))
-                   if ~f.onlydir | (f.onlydir & files(i).isdir)
-                        names{end+1} = [files(i).name];
-                   end
-              end
-           end
-       end
-       function fs = fieldnames(f)
-            fs = get_names(f);
-       end
-       
-       function disp(f)
-           fprintf('CFileFinder finding these files in ''%s'':\n', f.root);
-           disp(strvcat(get_names(f)));
-       end
-       
-       function cd(f)
-           cd(f.root);
-       end
-   end
-   
-   methods 
        function f = CFileFinder(dir, onlydir)
            if nargin < 1
                dir = pwd;
@@ -48,15 +23,45 @@ classdef CFileFinder
                f.root = fileparts(dir);
            end
        end                
+   
+       function lookup = get_names(f)
+           files = dir(f.dir); 
+           lookup = struct;
+           for i = 1:numel(files)
+               try
+                   if files(i).isdir
+                       if isequal(files(i).name, '.')==1 || isequal(files(i).name, '..')==1
+                           continue;
+                       end
+                       lookup.(files(i).name) = [files(i).name];
+                   elseif ~f.onlydir
+                       [~, name, ext] = fileparts(files(i).name);
+                       lookup.(name) = [name ext];
+                   end
+               catch
+               end
+           end
+       end
+       function fs = fieldnames(f)
+            fs = fieldnames(get_names(f));
+       end
        
+       function disp(f)
+           fprintf('CFileFinder finding these files in ''%s'':\n', f.root);
+           disp(strvcat(fieldnames(get_names(f))));
+       end
+       
+       function cd(f)
+           cd(f.root);
+       end
+             
        function B = subsref(f, S)
            if S.type == '.'
-               B = fullfile(f.root, S.subs);
+               lookup = get_names(f);
+               B = fullfile(f.root, lookup.(S.subs));
            end
-       end             
+       end    
    end
-    
-    
 end
 
 % ======================================================================

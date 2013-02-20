@@ -6,32 +6,47 @@ classdef CTimeleft < handle
         done
         total
         interval = 1;
+        last_update        
+        bar
     end
     
     methods
-        function t = CTimeleft(total, interval)
-            
+        function t = CTimeleft(total, bar, interval)            
             t.done = 0;
             t.total = total;
+            
             if nargin>1
-                t.interval = interval;
+                t.bar = bar;
             else
+                t.bar = false;
+            end
+            
+            if nargin>2
+                t.interval = interval;
+            elseif t.bar
                 t.interval = ceil(total*t.interval/100);
+            else
+                t.interval = 1;
             end
         end
         
         function [remaining status_string] = timeleft(t)
             if t.done == 0
                 t.t0 = tic;
+                t.last_update = t.t0;
             end
                               
             t.done = t.done + 1;
             
             elapsed = toc(t.t0);
+            elapsed_since_update = toc(t.last_update);
             
-            if t.done == 1 || mod(t.done,t.interval)==0 || t.done == t.total || nargout > 0
+            if t.done == 1 || t.done == t.total || nargout > 0 || ...
+                    (t.bar && mod(t.done,t.interval)==0) || ...
+                    (~t.bar && elapsed_since_update > t.interval)
 
                 % compute statistics
+                t.last_update = tic;
                 avgtime = elapsed./t.done;
                 remaining = (t.total-t.done)*avgtime;
                 
@@ -60,21 +75,32 @@ classdef CTimeleft < handle
                         0;
                     
                 end
-                pbar = ['[',pbar,']'];
                 
+                pbar = ['[',pbar,'] '];
                 
-                status_string = sprintf('%s %03d/%03d - %03d%%%% - %s|%s %s ',pbar,t.done,t.total,...
+                % whether or not to put a progress bar
+                if ~t.bar
+                    pbar = '';
+                end
+                
+                status_string = sprintf('%s%03d/%03d - %03d%%%% - %s|%s %s ',pbar,t.done,t.total,...
                     floor(t.done/t.total*100),timesofarstr,timeleftstr, ratestr);
                 
-                delstr = [];
-                if ~isempty(t.charsToDelete)
-                    delstr = repmat('\b',1,t.charsToDelete-1);
+                if t.bar
+                    delstr = [];
+                    if ~isempty(t.charsToDelete)
+                        delstr = repmat('\b',1,t.charsToDelete-1);
+                    end
+                    
+                    if nargout == 0
+                        fprintf([delstr status_string]);
+                    end
+                else
+                    if nargout == 0
+                        fprintf([status_string '\n']);
+                    end
                 end
-           
-                if nargout == 0
-                    fprintf([delstr status_string]);
-                end
-                
+                    
                 t.charsToDelete = numel(status_string);
             end
             
