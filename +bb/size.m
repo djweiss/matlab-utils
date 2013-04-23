@@ -1,5 +1,5 @@
 function varargout = size(b)
-% compute dimensions of bounding box
+% compute [width,height] of bounding box
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

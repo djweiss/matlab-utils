@@ -1,5 +1,5 @@
 function [new_idx] = exclude(idx, N)
-% function help
+% Strip elements from indices
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

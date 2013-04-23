@@ -1,4 +1,5 @@
 function [n] = count(x)
+% Shortcut to sum(x(:)~=0)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

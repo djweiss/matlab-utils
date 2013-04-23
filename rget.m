@@ -1,4 +1,5 @@
 function [x] = rget(s,varargin)
+% Recursively concatenate fields from a structure array.
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

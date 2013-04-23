@@ -1,4 +1,5 @@
-function b = pts_in_box(box,pts)
+function box = from_mask(mask)
+% Get bounding box of binary mask
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss
@@ -23,7 +24,13 @@ function b = pts_in_box(box,pts)
 % WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 % ======================================================================
 
-x = pts(1,:);
-y = pts(2,:);
-[left,top,right,bottom] = dealbox(box);
-b = (x >= left & x <= right & y >= top & y <= bottom);
+if ndims(mask) == 3
+    mask = mask(:,:,1);
+end
+
+[y,x] = find(mask);
+left = min(x);
+right = max(x);
+top = min(y);
+bottom = max(y);
+box = [left top right bottom];

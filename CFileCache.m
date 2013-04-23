@@ -1,5 +1,43 @@
 classdef CFileCache < handle
-    
+% Manage caching and retrieval of various precomputations
+%
+% Usage:
+%
+%   (simple usage demo case)
+% 
+%   cache = CFileCache('/tmp/mywork');
+%   cache.register('data1', @runDataFunction1);
+%   cache.register('data2', @runDataFunction2);
+%  
+%   % will run computation this time
+%   data1 = cache.get('file1', 'data1'); 
+%   % will load from cache this time
+%   data1 = cache.get('file1', 'data1'); 
+% 
+
+% ======================================================================
+% Copyright (c) 2012 David Weiss
+%
+% Permission is hereby granted, free of charge, to any person obtaining
+% a copy of this software and associated documentation files (the
+% "Software"), to deal in the Software without restriction, including
+% without limitation the rights to use, copy, modify, merge, publish,
+% distribute, sublicense, and/or sell copies of the Software, and to
+% permit persons to whom the Software is furnished to do so, subject to
+% the following conditions:
+% 
+% The above copyright notice and this permission notice shall be
+% included in all copies or substantial portions of the Software.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+% EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+% NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+% LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+% OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+% WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+% ======================================================================
+
     properties (Hidden = true)
         data_root
         funcmap
@@ -43,17 +81,10 @@ classdef CFileCache < handle
         function [filename subdir] = getFilename(f, name, target)
             name = f.getName(name);
             [~,cname,~] = fileparts(name); % strip original filename
-            %%
-%             tic
+
             hashcode = mod(sum(double(name).*[1:cols(name)])*11, 676);
             subdir = char(97 + [floor(hashcode/26) hashcode-26*floor(hashcode/26)]);
-%             toc
-%             tic
-%             uuid = char(java.util.UUID.nameUUIDFromBytes(double(name)));
-%             subdir = uuid(1:2); %end-2:end); %uuid.toString();
-%             %subdir = subdir(1:2);
-%             toc
-            %%
+
             filename = fullfile(f.data_root, [subdir '/' cname '-' target '.mat']);
         end     
         

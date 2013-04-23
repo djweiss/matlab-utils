@@ -1,4 +1,5 @@
 function [colors] = blueredyellow(K)
+% High contrast colormap that prints to grayscale correctly
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

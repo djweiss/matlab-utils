@@ -1,4 +1,11 @@
 function h = plotmany(n, x, y, varargin)
+% Easy to use plot many lines with unique styles.
+% 
+% Usage:
+%
+% % Plot 2 lines in different styles, automatically turning on hold, etc.
+% plotmany(1, x1, y1);
+% plotmany(2, x2, y2); 
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

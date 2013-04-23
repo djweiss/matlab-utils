@@ -1,37 +1,30 @@
-% WHOSBETTER is a function that sorts the WHOS output according a user
-% defined input (ie name, size, bytes, type etc.).  The output also
-% includes the FULL size rather than the #-D labels that TMW prefers. The
-% output is also human readable and incorporates the use of b (byte), kn
-% (kilobyte), Mb (megabyte), and Gb(gigabyte) labeling.
+function whos2(varargin)
+% Improved 'whos' function
 %
-% whosbetter -n  name ordered  (DEFAULT)
-% whosbetter -s  size ordered  (NOT IMPLEMENTED)
-% whosbetter -b  byte ordered
-% whosbetter -t  type ordered  (NOT IMPLEMENTED)
-%
-% SYTNAX: whosbetter -n        (DEFAULT)
-%         whosbetter -b
-%
-% DBE 2005/04/05
-%
-% Version 1.1 
-%     - Now handles ALL the arguments that WHOS does
-%     - Includes base stack summary (total # array elements and total size)
-%
-% Version 1.2
-%     - Improved handling of input arguments
-%     - Returns proper stack in debug mode
-%     - Minor output spacing improvements
-%     - Return NOTHING if the stack is clear/empty
-%
-% Version 1.3
-%     - Improve Class labeling for ALL classes and ALL complex classes...
-%
-% Future Improvements:
-%   1) Include handling for -s and -t options
-%   2) Improve Class labeling for all classes and all complex classes...
+% Based on 'whosbetter' by Daniel Ennis.
 
-function whosbetter(varargin);
+% ======================================================================
+% Copyright (c) 2012 David Weiss
+% 
+% Permission is hereby granted, free of charge, to any person obtaining
+% a copy of this software and associated documentation files (the
+% "Software"), to deal in the Software without restriction, including
+% without limitation the rights to use, copy, modify, merge, publish,
+% distribute, sublicense, and/or sell copies of the Software, and to
+% permit persons to whom the Software is furnished to do so, subject to
+% the following conditions:
+% 
+% The above copyright notice and this permission notice shall be
+% included in all copies or substantial portions of the Software.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+% EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+% NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+% LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+% OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+% WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+% ======================================================================
 
 if nargin==0 
     opt='-b';
@@ -131,7 +124,7 @@ end
 % Generate the byte SIZE string in HUMAN readable format
 for k=1:size(Q,1)
   if Q(k).bytes<1e3
-    byte_str{k}={[num2str(Q(k).bytes,'%3.1f'),'b ']};
+    byte_str{k}={[num2str(Q(k).bytes,'%3.1f'),' b']};
   elseif Q(k).bytes<1e6
     byte_str{k}={[num2str(Q(k).bytes/1e3,'%3.1f'),'kb']};
   elseif Q(k).bytes<1e9
@@ -210,7 +203,7 @@ for k=1:size(Q,1)
 end
 bytes_total=sum(bytes_vec);
 if bytes_total<1e3
-  bytes_total_str={[num2str(bytes_total,'%3.1f'),'b ']};
+  bytes_total_str={[num2str(bytes_total,'%3.1f'),' b']};
 elseif bytes_total<1e6
   bytes_total_str={[num2str(bytes_total/1e3,'%3.1f'),'kb']};
 elseif bytes_total<1e9

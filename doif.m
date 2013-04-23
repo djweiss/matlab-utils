@@ -1,4 +1,10 @@
 function [x] = doif(cond, xtrue, xfalse)
+% Implementation of ternary (conditional) operator
+%
+% Usage: simple demo
+%
+%   % eval func1(x) randomly, or func2(y) randomly
+%   x = doif(rand>0.5, 'func1(x)', 'func2(y)');
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

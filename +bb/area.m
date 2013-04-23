@@ -1,5 +1,5 @@
 function a=area(b)
-% returns area of bounding box
+% 
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

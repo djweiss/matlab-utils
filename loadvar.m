@@ -1,4 +1,5 @@
 function varargout = loadvar(filename, varargin)
+% Load the contents of a .MAT file directly into a returned variable
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

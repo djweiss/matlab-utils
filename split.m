@@ -1,4 +1,5 @@
 function scell = split(str,delim)
+% Split string into cell array based on delimiter
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

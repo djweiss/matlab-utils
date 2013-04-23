@@ -1,5 +1,5 @@
 function [val x] = getpropval(x, property, default)
-% GETPROPVAL - In-line propval.
+% Parse in-line property-value pairs
 %
 % Usage:
 %

@@ -1,7 +1,8 @@
 function [varargout] = size2(x,idx)
-% function [varargout] = size2(x,idx)
-%if one output, returns the size of x, indexed by idx
-%if [o1,o2,..,on] = size2(x,idx), behaves in the following way:
+% Return specific size dimensions of input
+% 
+% if one output, returns the size of x, indexed by idx
+% if [o1,o2,..,on] = size2(x,idx), behaves in the following way:
 %   s = size(x); s = s(idx); [o1,o2,..,on] = deal(s(1),s(2),...,s(n))
 
 % ======================================================================

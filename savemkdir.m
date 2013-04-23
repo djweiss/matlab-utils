@@ -1,4 +1,5 @@
 function savemkdir(filename, varargin)
+% Verbosely save variables to file, creating path if necessary.
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

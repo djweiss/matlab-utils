@@ -1,5 +1,5 @@
 function [clean] = strclean(s)
-% STRCLEAN
+% Clean underscores/quotes from a string
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

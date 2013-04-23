@@ -1,4 +1,5 @@
 function [im xtick ytick] = scatterim(x, y, nbins)
+% Create a scatter-plot image for high volume plots.
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

@@ -1,4 +1,5 @@
 function A = sublin(X,i)
+% Shortcut to X(i)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

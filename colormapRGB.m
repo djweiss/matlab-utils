@@ -1,4 +1,5 @@
 function mymap = colormapRGB( N, rm, gm, bm)
+% Generate a simple linearly interpolated colormap.
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss
@@ -29,7 +30,7 @@ function mymap = colormapRGB( N, rm, gm, bm)
   mv = interp1( bm(:,1), bm(:,2), x);
   mymap = [ rv', gv', mv'];
   %exclude invalid values that could appear
-  mymap( isnan(mymap) ) = 0;
-  mymap( (mymap>1) ) = 1;
-  mymap( (mymap<0) ) = 0;
+  mymap(isnan(mymap)) = 0;
+  mymap(mymap>1) = 1;
+  mymap(mymap<0) = 0;
 end

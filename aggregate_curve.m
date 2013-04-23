@@ -1,4 +1,5 @@
 function [curve] = aggregate_curve(x, y, varargin)
+% Utility for averaging multiple plots together in a rigorous fashion
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

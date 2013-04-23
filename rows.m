@@ -1,4 +1,5 @@
 function [r] = rows(X)
+% Shortcut to size(X,1)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

@@ -1,4 +1,5 @@
 function v=vec(A)
+% Shortcut to x(:)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

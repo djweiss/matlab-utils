@@ -1,4 +1,5 @@
 function [s] = fadd(s, f, x)
+% Add numeric value to a structure field (or create if nonexistent)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

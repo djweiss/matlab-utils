@@ -1,4 +1,5 @@
 function [sty color unused] = get_unique_style(n, varargin)
+% Get a unique LineSpec from a set of style combinations.
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss

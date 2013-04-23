@@ -1,4 +1,5 @@
 function [c] = cols(X)
+% Shortcut to size(X,2)
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss
