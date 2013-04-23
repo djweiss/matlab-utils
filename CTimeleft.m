@@ -5,28 +5,38 @@ classdef CTimeleft < handle
         charsToDelete = [];
         done
         total
+        prefix = '';
         interval = 1;
         last_update        
         bar
     end
     
     methods
-        function t = CTimeleft(total, bar, interval)            
-            t.done = 0;
-            t.total = total;
-            
-            if nargin>1
-                t.bar = bar;
-            else
-                t.bar = false;
+        function t = CTimeleft(varargin) %
+            if ischar(varargin{1})
+                t.prefix = [varargin{1} ' '];
+                varargin = varargin(2:end);
             end
             
-            if nargin>2
-                t.interval = interval;
-            elseif t.bar
-                t.interval = ceil(total*t.interval/100);
+            if isequal(varargin{end}, 'bar')
+                t.bar = true;
+                varargin = varargin(1:end-1);
+            elseif isequal(varargin{end}, 'nobar')
+                t.bar = false;
+                varargin = varargin(1:end-1);
             else
-                t.interval = 1;
+                t.bar = usejava('desktop');
+            end
+                
+            t.done = 0;
+            t.total = varargin{1};
+            
+            if numel(varargin) > 1 
+                t.interval = varargin{2};
+            elseif t.bar
+                t.interval = ceil(t.total*t.interval/100);
+            else
+                t.interval = 2;
             end
         end
         
@@ -47,8 +57,8 @@ classdef CTimeleft < handle
 
                 % compute statistics
                 t.last_update = tic;
-                avgtime = elapsed./t.done;
-                remaining = (t.total-t.done)*avgtime;
+                avgtime = elapsed./(t.done-1);
+                remaining = (t.total-t.done+1)*avgtime;
                 
                 if avgtime < 1
                     ratestr = sprintf('- %.2f iter/s', 1./avgtime);
@@ -83,7 +93,7 @@ classdef CTimeleft < handle
                     pbar = '';
                 end
                 
-                status_string = sprintf('%s%03d/%03d - %03d%%%% - %s|%s %s ',pbar,t.done,t.total,...
+                status_string = sprintf('%s%s%03d/%03d - %03d%%%% - %s|%s %s ',t.prefix,pbar,t.done,t.total,...
                     floor(t.done/t.total*100),timesofarstr,timeleftstr, ratestr);
                 
                 if t.bar
@@ -102,6 +112,7 @@ classdef CTimeleft < handle
                 end
                     
                 t.charsToDelete = numel(status_string);
+                drawnow update;
             end
             
             if t.done == t.total && nargout == 0 

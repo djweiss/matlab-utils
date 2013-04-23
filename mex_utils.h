@@ -52,6 +52,7 @@ template <typename T> bool checkRange(vector< T > a, T min, T max) {
         if (a[i] < min || a[i] > max)
             return false;
     }
+    return true;
 }
 
 /***********************************************************************/

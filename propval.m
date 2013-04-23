@@ -208,6 +208,6 @@ for i = 1:numel(properties)
   end
 
   % mark as used
-  used.(properties{i}) = true;
+  %used.(properties{i}) = true;
 end
 

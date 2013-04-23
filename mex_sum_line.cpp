@@ -40,7 +40,7 @@ void mexFunction(int nlhs, mxArray *out[], int nrhs, const mxArray *in[]){
         print_usage(); return;
     }
     
-    vector<vector<float> > X = mxarrayToVector2D<float>(in[0]);
+    vector<vector<double> > X = mxarrayToVector2D<double>(in[0]);
     vector<vector<int> > p1 = mxarrayToVector2D<int>(in[1]);
     vector<vector<int> > p2 = mxarrayToVector2D<int>(in[2]);
     vector<int> inds_i = mxarrayToVector1D<int>(in[3]);
@@ -60,14 +60,14 @@ void mexFunction(int nlhs, mxArray *out[], int nrhs, const mxArray *in[]){
     }
 
     if (!checkRange<int>(inds_i, 1, k1)) {
-        mexErrMsgTxt("i is out of range\n"); return; 
+        mexErrMsgTxt("i is out of range \n"); return; 
     }
     if (!checkRange<int>(inds_j, 1, k2)) {
         mexErrMsgTxt("j is out of range\n"); return; 
     }
 
-    vector<float> sums(n_pairs, 0.0);
-    vector<float> npts(n_pairs, 0.0);
+    vector<double> sums(n_pairs, 0.0);
+    vector<int> npts(n_pairs, 0.0);
     
     float step = 1.0 / (n_interp-1);
     
@@ -94,15 +94,15 @@ void mexFunction(int nlhs, mxArray *out[], int nrhs, const mxArray *in[]){
                 continue;
             oldx = x; oldy = y;
             
-            //mexPrintf("\t(%d,%d)\n", x,y);
+            //mexPrintf("\t(%d,%d)\n", x+1,y+1);
             
             sums[i] += X[y][x];
             npts[i]++;
         }
     }
     
-    out[0] = vectorToMxArray1D<float>(sums);
-    out[1] = vectorToMxArray1D<float>(npts);
+    out[0] = vectorToMxArray1D<double>(sums);
+    out[1] = vectorToMxArray1D<int>(npts);
     
 //             sprintf(buf, "seg[%d] = %d is out of bounds!\n", i, idx);
 //             mexErrMsgTxt(buf);
