@@ -1,4 +1,4 @@
-function b = pts_in_box(box,pts)
+function [A] = paintbox(A, box, color) 
 
 % ======================================================================
 % Copyright (c) 2012 David Weiss
@@ -23,7 +23,9 @@ function b = pts_in_box(box,pts)
 % WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 % ======================================================================
 
-x = pts(1,:);
-y = pts(2,:);
-[left,top,right,bottom] = dealbox(box);
-b = (x >= left & x <= right & y >= top & y <= bottom);
+for k = 1:size(A,3)
+    A(box(2):box(4), box(1), k) = color(k);
+    A(box(2):box(4), box(3), k) = color(k);
+    A(box(2), box(1):box(3), k) = color(k);
+    A(box(4), box(1):box(3), k) = color(k);
+end

@@ -23,6 +23,7 @@ function [n] = count(x)
 % WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 % ======================================================================
 
+
 % Returns the number of non-zero values in X
 %
 % N = COUNT(X)
