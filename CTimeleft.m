@@ -56,10 +56,10 @@ classdef CTimeleft < handle
                 varargin = varargin(2:end);
             end
             
-            if isequal(varargin{end}, 'bar')
+            if numel(varargin) > 0 && isequal(varargin{end}, 'bar')
                 t.bar = true;
                 varargin = varargin(1:end-1);
-            elseif isequal(varargin{end}, 'nobar')
+            elseif numel(varargin) > 0 && isequal(varargin{end}, 'nobar')
                 t.bar = false;
                 varargin = varargin(1:end-1);
             else
@@ -78,7 +78,7 @@ classdef CTimeleft < handle
             end
         end
         
-        function [remaining status_string] = timeleft(t)
+        function [did_update] = timeleft(t)
             if t.done == 0
                 t.t0 = tic;
                 t.last_update = t.t0;
@@ -88,11 +88,13 @@ classdef CTimeleft < handle
             
             elapsed = toc(t.t0);
             elapsed_since_update = toc(t.last_update);
-            
-            if t.done == 1 || t.done == t.total || nargout > 0 || ...
+
+            did_update = false;
+            if t.done == 1 || t.done == t.total || ...
                     (t.bar && mod(t.done,t.interval)==0) || ...
                     (~t.bar && elapsed_since_update > t.interval)
 
+                did_update = true;
                 % compute statistics
                 t.last_update = tic;
                 avgtime = elapsed./(t.done-1);
@@ -140,20 +142,20 @@ classdef CTimeleft < handle
                         delstr = repmat('\b',1,t.charsToDelete-1);
                     end
                     
-                    if nargout == 0
+                    %if nargout == 0
                         fprintf([delstr status_string]);
-                    end
+                    %end
                 else
-                    if nargout == 0
+                    %if nargout == 0
                         fprintf([status_string '\n']);
-                    end
+                    %end
                 end
                     
                 t.charsToDelete = numel(status_string);
                 drawnow update;
             end
             
-            if t.done == t.total && nargout == 0 
+            if t.done == t.total %&& nargout == 0 
                 fprintf('\n');
             end
         end

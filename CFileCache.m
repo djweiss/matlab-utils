@@ -39,10 +39,13 @@ classdef CFileCache < handle
 % ======================================================================
 
     properties (Hidden = true)
-        data_root
         funcmap
         namefield = 'name';
         funclist = {};
+    end
+    
+    properties 
+        data_root
     end
     
     methods 
@@ -55,7 +58,7 @@ classdef CFileCache < handle
             end
             
             if ~exist(f.data_root, 'dir')
-                error('directory ''%s'' does not exist', f.data_root);
+                unixf('mkdir -p %s', f.data_root); %%error('directory ''%s'' does not exist', f.data_root);
             end
         end
         

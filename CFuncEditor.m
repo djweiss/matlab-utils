@@ -71,10 +71,17 @@ classdef CFuncEditor
        
        function [varargout] = subsref(f, S)
            if numel(S) == 1
-               if S.type == '.'
+               if isequal(S.type, '.')
                    packdir = fullfile(f.root, ['+' S.subs]);
                    if exist(packdir, 'dir')
                        varargout{1} = CFileFinder(fullfile(packdir, '*.m'), 0);
+                   end
+               elseif isequal(S.type, '()')
+                   B = fullfile(f.root, [S.subs{1} '.m']);
+                   if nargout == 0
+                       edit(B);
+                   else
+                       varargout{1} = B;
                    end
                end
            else
